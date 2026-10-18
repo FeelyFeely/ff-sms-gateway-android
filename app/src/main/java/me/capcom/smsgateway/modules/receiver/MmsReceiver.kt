@@ -48,6 +48,10 @@ class MmsReceiver : BroadcastReceiver(), KoinComponent {
                 return
             }
 
+            val pduSha256 = MessageDigest.getInstance("SHA-256")
+                .digest(pdu)
+                .joinToString("") { "%02x".format(it) }
+
             logsService.insert(
                 LogEntry.Priority.DEBUG,
                 MODULE_NAME,
@@ -59,14 +63,28 @@ class MmsReceiver : BroadcastReceiver(), KoinComponent {
                     "header" to intent.extras?.getByteArray("header")
                         ?.joinToString("") { "%02x".format(it) },
                     "pduSizeBytes" to pdu.size,
-                    "pduSha256" to MessageDigest.getInstance("SHA-256")
-                        .digest(pdu)
-                        .joinToString("") { "%02x".format(it) },
+                    "pduHex" to pdu.toHexDump(),
+                    "pduSha256" to pduSha256,
                 )
             )
 
 
             val mmsNotification = MMSParser.parseMNotificationInd(pdu)
+
+            if (mmsNotification.ignoredHeaders.isNotEmpty()) {
+                val headers = mmsNotification.ignoredHeaders.joinToString(", ") { "0x%02x".format(it) }
+                Log.w(TAG, "MMS notification contains unparsed headers: $headers")
+                logsService.insert(
+                    LogEntry.Priority.WARN,
+                    MODULE_NAME,
+                    "MMS notification contains unparsed headers",
+                    mapOf(
+                        "headers" to headers,
+                        "pduSizeBytes" to pdu.size,
+                        "pduSha256" to pduSha256,
+                    )
+                )
+            }
 
             Log.d(TAG, "MMS received from ${mmsNotification.from}")
 
@@ -91,6 +109,7 @@ class MmsReceiver : BroadcastReceiver(), KoinComponent {
 
     companion object {
         private const val TAG = "MmsReceiver"
+        private const val PDU_HEX_DUMP_LIMIT = 256
 
         private val INSTANCE: MmsReceiver by lazy { MmsReceiver() }
 
@@ -116,5 +135,10 @@ class MmsReceiver : BroadcastReceiver(), KoinComponent {
                 Log.w(TAG, "Receiver was not registered", e)
             }
         }
+    }
+
+    private fun ByteArray.toHexDump(): String {
+        val hex = take(PDU_HEX_DUMP_LIMIT).joinToString("") { "%02x".format(it) }
+        return if (size > PDU_HEX_DUMP_LIMIT) "$hex..." else hex
     }
 }
