@@ -2,7 +2,7 @@
     <string name="address_is">%1$s</string>
     <string name="api_url_private_token_credentials_etc">API URL, private token, credentials, etc.</string>
     <string name="api_url">API URL</string>
-    <string name="app_name" translatable="false">SMSGate</string>
+    <string name="app_name" translatable="false">FeelyFeely SMS</string>
     <string name="app_version_build">App version (build)</string>
     <string name="automatic_key_rotation">Automatic key rotation</string>
     <string name="battery_optimization_already_disabled">Battery optimization already disabled</string>
@@ -104,7 +104,7 @@
     <string name="server_address">Server address</string>
     <string name="server">Server</string>
     <string name="set_maximum_value_to_activate">Set maximum value to activate</string>
-    <string name="settings_address_is_sms_capcom_me" translatable="false">api.sms-gate.app</string>
+    <string name="settings_address_is_sms_capcom_me" translatable="false">smsrelay.feelyfeely.cloud</string>
     <string name="settings_changed_via_api_restart_the_app_to_apply_changes">Settings changed via
         API. Restart the app to apply changes.</string>
     <string name="settings_local_address_is" translatable="false">&lt;a href>%1$s:%2$d&lt;/a></string>
