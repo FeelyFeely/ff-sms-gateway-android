@@ -57,7 +57,7 @@ class GatewaySettings(
         private const val NOTIFICATION_CHANNEL = "notification_channel"
 
         // FeelyFeely fork: our self-hosted relay, so a phone never registers on the public cloud.
-        const val PUBLIC_URL = "https://smsrelay.feelyfeely.cloud/mobile/v1"
+        const val PUBLIC_URL = "https://smsrelay.feelyfeely.cloud/api/mobile/v1"
     }
 
     override fun export(): Map<String, *> {
