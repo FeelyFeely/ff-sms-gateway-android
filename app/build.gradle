@@ -10,12 +10,14 @@ ksp {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "cloud.feelyfeely.sms"
         minSdk 21
-        targetSdk 33
+        // 34, not 35: at 35 dataSync foreground services stop after ~6h/day,
+        // which would stop the gateway. Play Protect blocks 33 as too old.
+        targetSdk 34
         versionCode 1
         versionName "1.0.0"
 
