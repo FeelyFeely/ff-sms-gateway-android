@@ -1,5 +1,6 @@
 package me.capcom.smsgateway.modules.messages.workers
 
+import android.content.pm.ServiceInfo
 import android.content.Context
 import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
@@ -71,7 +72,7 @@ class SendMessagesWorker(appContext: Context, params: WorkerParameters) :
             applicationContext.getString(R.string.send_messages_notification)
         )
 
-        return ForegroundInfo(notificationId, notification)
+        return ForegroundInfo(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
     }
 
     companion object {

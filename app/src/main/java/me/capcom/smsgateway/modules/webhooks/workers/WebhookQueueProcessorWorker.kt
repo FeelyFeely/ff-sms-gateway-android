@@ -1,5 +1,6 @@
 package me.capcom.smsgateway.modules.webhooks.workers
 
+import android.content.pm.ServiceInfo
 import android.content.Context
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -438,7 +439,7 @@ class WebhookQueueProcessorWorker(
             applicationContext.getString(R.string.processing_webhook_queue)
         )
 
-        return ForegroundInfo(notificationId, notification)
+        return ForegroundInfo(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
     }
 
     /**

@@ -1,5 +1,6 @@
 package me.capcom.smsgateway.modules.webhooks.workers
 
+import android.content.pm.ServiceInfo
 import android.content.Context
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -178,7 +179,7 @@ class SendWebhookWorker(appContext: Context, params: WorkerParameters) :
             applicationContext.getString(R.string.sending_webhook)
         )
 
-        return ForegroundInfo(notificationId, notification)
+        return ForegroundInfo(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
     }
 
     private val client = HttpClient(OkHttp) {
