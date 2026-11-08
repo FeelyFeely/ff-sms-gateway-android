@@ -1,0 +1,4 @@
+# One phone per line: <adb serial> <name> [packages to keep running...]
+# Packages default to: cloud.feelyfeely.sms com.whatsapp.w4b
+# Find serials with: adb devices
+27081JEGR21801  pixel
